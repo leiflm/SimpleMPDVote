@@ -1,0 +1,768 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pa",
+				"par	Paragraph"
+			],
+			[
+				"p",
+				"par	Paragraph"
+			],
+			[
+				"para",
+				"paragraph"
+			],
+			[
+				"math",
+				"mathnormal"
+			],
+			[
+				"text",
+				"textcquote"
+			],
+			[
+				"subs",
+				"subs	Sub Sub Section"
+			],
+			[
+				"mat",
+				"mathnormal"
+			],
+			[
+				"sub",
+				"sub	Sub Section"
+			],
+			[
+				"stack",
+				"stackframe"
+			],
+			[
+				"sec",
+				"sec	Section"
+			],
+			[
+				"ite",
+				"itemize"
+			],
+			[
+				"em",
+				"emp"
+			],
+			[
+				"se",
+				"sec	Section"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "MPDPlaylist.py",
+			"settings":
+			{
+				"buffer_size": 452,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "__init__.py",
+			"settings":
+			{
+				"buffer_size": 68,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "PlaylistItem.py",
+			"settings":
+			{
+				"buffer_size": 445,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"selected_items":
+		[
+			[
+				"latex",
+				"LaTexTools: Delete temporary files"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"subl",
+				"Sublimall: Upload"
+			],
+			[
+				"update",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"uplo",
+				"Sublimall: Upload"
+			],
+			[
+				"up",
+				"Sublimall: Upload"
+			],
+			[
+				"upload",
+				"Sublimall: Upload"
+			],
+			[
+				"sublimall up",
+				"Sublimall: Upload"
+			],
+			[
+				"late",
+				"LaTexTools: Delete temporary files"
+			],
+			[
+				"delete",
+				"LaTexTools: Delete temporary files"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: lis",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 538.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/Thesaurus.sublime-settings",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/Package Control.sublime-settings",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/Sublimall.sublime-settings",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/LaTeX.sublime-settings",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/leif/Dropbox/Seminararbeit Master/ausarbeitung.toc",
+		"/Users/leif/Dropbox/Seminararbeit Master/titlepage.tex",
+		"/Users/leif/Dropbox/Seminararbeit Master/macros.sty",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/Default (OSX).sublime-keymap",
+		"/Users/leif/Downloads/quizduell-apk/res/raw/ts.bks",
+		"/Users/leif/Dropbox/Seminararbeit Master/drawstack.sty",
+		"/Users/leif/Dropbox/Seminararbeit Master/snippets/weakness_strcpy_strcpy.c",
+		"/Users/leif/Dropbox/Seminararbeit Master/auslagerung.tex",
+		"/Users/leif/Dropbox/Seminararbeit Master/CESlogo.eps",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/User/yaTranslate.sublime-settings",
+		"/Users/leif/Library/Application Support/Sublime Text 3/Packages/YandexTranslate/README.md",
+		"/Users/leif/Desktop/Seminararbeit.sublime-project",
+		"/Users/leif/Dropbox/Seminararbeit Master/return_oriented_programming.tex",
+		"/Users/leif/Desktop/Besuch in Bad Ems 18.11.2013.txt",
+		"/Volumes/EFI/EFI/boot/refind.conf",
+		"/Volumes/EFI/EFI/arch/refind_linux.conf",
+		"/private/tmp/refind-bin-0.7.5/README.txt",
+		"/Users/leif/Dropbox/Seminararbeit Master/Ausarbeitung/introduction.tex",
+		"/Users/leif/Dropbox/adam-efl/SYSTEM-CONFIG/RPI/99-calibration.conf",
+		"/Users/leif/Dropbox/KIT/Prüfungsfragen Angewandte Kryptographie.txt",
+		"/Users/leif/Dropbox/adam-efl/SYSTEM-CONFIG/cross compile mit distcc.txt",
+		"/Users/leif/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/1EC4EF06-0DC4-4E31-824D-44934D506C25/mime-attachment.ics",
+		"/Users/leif/Dropbox/Seminararbeit Master/Ausarbeitung.tex",
+		"/Users/leif/Dropbox/Seminararbeit Master/Ausarbeitung Mac OS.sublime-project",
+		"/Users/leif/Dropbox/Seminararbeit Master/Ausarbeitung/appendix.tex"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 109.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"sec:environment",
+			"sec:objective",
+			" - ",
+			"ae",
+			"oe",
+			"lst",
+			"include",
+			"sub:environment",
+			"[H]",
+			"[h]",
+			"par",
+			"subsubsection",
+			"system_environment",
+			"sec:environment",
+			"coverage_environment",
+			"goals_objectives",
+			"Return to Global Offset Table Attack - ",
+			"elf",
+			"global",
+			"global offset ",
+			"got",
+			"subsection",
+			"sub:definition_of_security",
+			"sec:definitions",
+			"Definitions",
+			"definitions",
+			"Definitions",
+			"portation",
+			"\\circ",
+			"ocircle",
+			"◦",
+			"checkmark",
+			"✗",
+			"\\ballotcheck",
+			"✓",
+			"nx-",
+			"book",
+			"tab",
+			"tabul",
+			"N_{inp}",
+			"N_{chk}",
+			"N_inp",
+			"N_chk",
+			"N_inp",
+			"inp",
+			"chk",
+			"isa",
+			"textcquote",
+			"\\ref",
+			"figure",
+			"graphi",
+			"bib",
+			"libsaf",
+			"pax",
+			"\\fiel",
+			"PIEs",
+			"line",
+			"table",
+			"longtable",
+			"table",
+			"subsubsection",
+			" \n",
+			"footnote",
+			"newcommand",
+			"fig:stack frame",
+			"\\tt",
+			"tt",
+			"\\tt{",
+			"\\tt {",
+			"\\tt{",
+			"hline",
+			"hallo",
+			"sss",
+			"ssss",
+			"sssss",
+			"subsubsub",
+			"subsubsubsub",
+			"snake",
+			"3.2",
+			"3,",
+			"2,",
+			"in",
+			"startframe",
+			"canary",
+			"maketit",
+			"title",
+			"\\u",
+			"subsubsection"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"sec:objective_and_environment",
+			" -- ",
+			"ä",
+			"ö",
+			"sec:environment",
+			"sub:environment",
+			"environment",
+			"objective",
+			"par:definition_of_security",
+			"sec:introduction",
+			"Introduction",
+			"port",
+			"$\\circ$",
+			"circ",
+			"\\ocircle",
+			"cmark",
+			"\\xmark",
+			"\\checkmark",
+			"$\\ballotcheck$",
+			"\\ballotcheck",
+			"\\autoref",
+			"{\\tt ",
+			"{\\tt",
+			"ss",
+			"subsub",
+			"\\stackmaxwidth",
+			"3.2,"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "MPDPlaylist.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 452,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								156,
+								156
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "__init__.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 68,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								68,
+								68
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "PlaylistItem.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 445,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								17,
+								17
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 304.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "simplempdvote.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 205.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
