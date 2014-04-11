@@ -1,5 +1,5 @@
 import time
-import http.server as BaseHTTPServer
+import http.server as HTTPServer
 from BallotServer import BallotServer
 
 
@@ -7,7 +7,7 @@ from BallotServer import BallotServer
 VOTE_HOST_NAME = ''
 VOTE_PORT_NUMBER = 6601
 
-class VoteHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
 
     def do_HEAD(s):
         s.send_response(200)
@@ -43,10 +43,6 @@ class VoteHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             return int(float(song_id_str))
 
         """http API"""
-        """This request root document (app)"""
-        if s.path is "/":
-            send_file(s, "./index.html")
-            return
 
         """return playlist as json """
         if s.path.startswith("/playlist.json"):
@@ -71,15 +67,14 @@ class VoteHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 make_header(s, 400)
 
             return
-        
-        """Unrecognized call """ 
-        make_header(s, 404)
-        s.wfile.write("<body><p>404 Not found.</p></body></html>".encode('utf-8'))
+
+        """As default let SimpleHTTPServer look for the file. """
+        HTTPServer.SimpleHTTPRequestHandler.do_GET(s)
         return
 
 
 if __name__ == '__main__':
-    server_class = BaseHTTPServer.HTTPServer
+    server_class = HTTPServer.HTTPServer
     httpd = server_class((VOTE_HOST_NAME, VOTE_PORT_NUMBER), VoteHandler)
     print ("{0} Server Starts - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
     
