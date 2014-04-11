@@ -2,13 +2,12 @@ from PlaylistItem import PlaylistItem, JsonEncoder
 import mpd
 import json
 
+MPD_HOST = "Kellerbar-Desktop.fritz.box"
+MPD_PORT = 6600
 class BallotServer:
 
     mpdHandle = None
     votedPlaylist = None
-
-    def serve(self):
-        print "Serving!"
 
     def mergeVotePlaylistIntodMpdPlaylist(self):
         mpdPl = self.mpdHandle.playlistid()
@@ -67,7 +66,8 @@ class BallotServer:
         idx2 = pl.index(lessVotes)
         pl.insert(idx2, pl.pop(idx))
         self.mpdHandle.moveid(plItem.mpdId, idx2)
-        print "Swapping to playlist position %i" % idx2
+        #print "Swapping to playlist position %i" % idx2
+        print ("Swapping to playlist position {0}".format( idx2 ))
 
     def voteForMpdId(self, mpdId):
         success = False
@@ -91,32 +91,9 @@ class BallotServer:
 
     def __init__(self):
         # Connect to mpd
-        print "Connecting to MPD"
+        print ("Connecting to MPD".format())
         self.mpdHandle = mpd.MPDClient()
-        self.mpdHandle.connect("Kellerbar-Desktop.fritz.box", 6600)
-        print "Updating playlist"
+        self.mpdHandle.connect(MPD_HOST, MPD_PORT)
+        print ("Updating playlist".format())
         self.updatePlaylist()
         
-        # Some test voting
-        print "id : votes"
-        for el in self.getPlaylist():
-            print "%d : %d" % (el.mpdId, el.votes)
-        self.voteForMpdId(6)
-        self.voteForMpdId(6)
-        self.voteForMpdId(4)
-        self.voteForMpdId(4)
-        self.voteForMpdId(6)
-        self.voteForMpdId(8)
-        self.voteForMpdId(8)
-        self.voteForMpdId(8)
-        self.voteForMpdId(8)
-        print ("voted")
-        print "id : votes"
-        for el in self.getPlaylist():
-            print "%d : %d" % (el.mpdId, el.votes)
-        # Test voting end
-        print self.getPlaylistAsJson()
-
-if __name__ == "__main__":
-        bs = BallotServer()
-        bs.serve()
