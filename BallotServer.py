@@ -1,5 +1,6 @@
-from PlaylistItem import PlaylistItem
+from PlaylistItem import PlaylistItem, JsonEncoder
 import mpd
+import json
 
 class BallotServer:
 
@@ -84,6 +85,10 @@ class BallotServer:
     def getPlaylist(self):
         return self.playlist
 
+    def getPlaylistAsJson(self):
+        return json.dumps(self.playlist, cls=JsonEncoder)
+        #return json.dumps(self.playlist.__dict__)
+
     def __init__(self):
         # Connect to mpd
         print "Connecting to MPD"
@@ -110,6 +115,7 @@ class BallotServer:
         for el in self.getPlaylist():
             print "%d : %d" % (el.mpdId, el.votes)
         # Test voting end
+        print self.getPlaylistAsJson()
 
 if __name__ == "__main__":
         bs = BallotServer()

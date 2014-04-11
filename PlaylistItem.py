@@ -1,4 +1,5 @@
 import sys
+import json
 
 class PlaylistItem:
 
@@ -14,3 +15,10 @@ class PlaylistItem:
         self.playlistPosSetByOperator = posByOperator
         self.artist = artist
         self.title = title
+
+class JsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, PlaylistItem):
+            return obj.__dict__
+        # Let the base class default method raise the TypeError
+        return json.JSONEncoder.default(self, obj)
