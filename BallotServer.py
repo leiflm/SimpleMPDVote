@@ -52,18 +52,20 @@ class BallotServer:
     def swapAccordingToVotes(self, plItem):
         pl = self.playlist
         idx = pl.index(plItem)
-        aboveListReversed = pl[:idx]
+        aboveListReversed = pl[1:idx]
         aboveListReversed.reverse()
+        lessVotes = None
 
         for itemAbove in aboveListReversed:
-            idx = pl.index(plItem)
-            if itemAbove.votes < plItem.votes: # more votes -> swap
-                idx2 = pl.index(itemAbove)
-                if idx2 == 0: # We don't touch the first (playing) element
-                    return
-                pl[idx], pl[idx2] = pl[idx2], pl[idx]
-                continue
+            if itemAbove.votes > plItem.votes:
+                break
+            lessVotes = itemAbove
+
+        if lessVotes == None:
             return
+        idx2 = pl.index(lessVotes)
+        pl[idx], pl[idx2] = pl[idx2], pl[idx]
+        print "Swapping with mpdId %i" % lessVotes.mpdId
 
     def voteForMpdId(self, mpdId):
         success = False
