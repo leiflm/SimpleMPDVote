@@ -46,10 +46,10 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
 
         """return playlist as json """
         if s.path.startswith("/playlist.json"):
-            make_header(s, 200)
-            make_html_title(s)
-            s.wfile.write("<body><p>Get Playlist.</p>".encode('utf-8'))
-            s.wfile.write("</body></html>".encode('utf-8'))
+            s.send_response(200)
+            s.send_header("Content-type", "application/json")
+            s.end_headers()
+            s.wfile.write(bs.getPlaylistAsJson().encode('utf-8'))
             return
             
         """Process a vote with given id """
