@@ -64,8 +64,9 @@ class BallotServer:
         if lessVotes == None:
             return
         idx2 = pl.index(lessVotes)
-        pl[idx], pl[idx2] = pl[idx2], pl[idx]
-        print "Swapping with mpdId %i" % lessVotes.mpdId
+        pl.insert(idx2, pl.pop(idx))
+        self.mpdHandle.moveid(plItem.mpdId, idx2)
+        print "Swapping to playlist position %i" % idx2
 
     def voteForMpdId(self, mpdId):
         success = False
