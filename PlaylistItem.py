@@ -3,14 +3,14 @@ import sys
 class PlaylistItem:
 
     mpdId = None
-    playlistRank = sys.maxsize
-    playlistRankSetByOperator = None
+    votes = 0
+    playlistPosSetByOperator = None
     artist = "Unknown Artist"
     title = "Unkown Title"
 
-    def __init__(self, mpdId, rank, rankByOperator, artist, title):
+    def __init__(self, mpdId, votes, posByOperator, artist, title):
         self.mpdId = mpdId
-        self.playlistRank = rank
-        self.playlistRankSetByOperator = rankByOperator
+        self.votes = votes
+        self.playlistPosSetByOperator = posByOperator
         self.artist = artist
         self.title = title
