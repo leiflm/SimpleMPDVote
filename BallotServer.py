@@ -1,4 +1,5 @@
 from PlaylistItem import PlaylistItem, JsonEncoder
+from MPDClientWrapper import MPDClientWrapper
 import mpd
 import json
 
@@ -103,8 +104,7 @@ class BallotServer:
     def __init__(self):
         # Connect to mpd
         print ("Connecting to MPD".format())
-        self.mpdHandle = mpd.MPDClient()
-        self.mpdHandle.connect(MPD_HOST, MPD_PORT)
+        self.mpdHandle = MPDClientWrapper(MPD_HOST, MPD_PORT)
         print ("Updating playlist".format())
         self.updatePlaylist()
         
