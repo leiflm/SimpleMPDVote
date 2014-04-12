@@ -39,7 +39,6 @@ class BallotServer:
         return pl
 
     def updatePlaylist(self):
-        print ("Updating playlist".format())
         self.playlist = self.mergeVotePlaylistIntodMpdPlaylist()
 
         ''' 
