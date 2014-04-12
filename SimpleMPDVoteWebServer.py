@@ -12,48 +12,30 @@ from BallotServer import BallotServer
 VOTE_HOST_NAME = ''
 VOTE_PORT_NUMBER = 6601
 
+HTML_OK = 200
+HTML_BAD_REQUEST = 400
+HTML_NOT_FOUND = 404
+
 class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
 
-    def do_HEAD(s):
-        s.send_response(200)
-        s.send_header("Content-type", "text/html")
+    def make_header(s, response=HTML_NOT_FOUND, content_type="text/html"):
+        s.send_response(response)
+        s.send_header("Content-type", content_type)
         s.end_headers()
+
+    def do_HEAD(s):
+        s.make_header(HTML_OK, "text/html")
 
     """Respond to a GET request."""
     def do_GET(s):
-        def make_header(s, response=404):
-            s.send_response(response)
-            s.send_header("Content-type", "text/html")
-            s.end_headers()
-
-        def make_html_title(s):
-            s.wfile.write("<html><head><title>Vote for Songs.</title></head>".encode('utf-8'))
-            
-        """Send file content of path"""
-        def send_file(s, fpath):
-            try:
-                f = open(fpath)
-                make_header(s, 200)
-                for line in f:
-                    s.wfile.write(line.encode('utf-8'))
-                f.close
-            except IOError:
-                make_header(s, 404)
-                make_html_title(s)
-                s.wfile.write("<body><p>404 Not found.</p></body></html>".encode('utf-8'))
-            return
-
         def get_song_id(path):
             song_id_str = path.replace("/vote/", "")
             return int(float(song_id_str))
 
         """http API"""
-
         """return playlist as json """
         if s.path.startswith("/playlist.json"):
-            s.send_response(200)
-            s.send_header("Content-type", "application/json")
-            s.end_headers()
+            s.make_header(HTML_OK, "application/json")
             s.wfile.write(bs.getPlaylistAsJson().encode('utf-8'))
             return
             
@@ -62,15 +44,12 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
             try:
                 song_id = int(float(s.path.replace("/vote/", "")))
                 bs.voteForMpdId(song_id)
-
-                make_header(s, 200)
-                make_html_title(s)
+                s.make_header(HTML_OK, "application/json")
                 s.wfile.write("<body>".encode('utf-8'))
                 s.wfile.write("<p>You voted: {0}</p>".format(song_id).encode('utf-8'))
                 s.wfile.write("</body></html>".encode('utf-8'))
             except ValueError:
-                make_header(s, 400)
-
+                s.make_header(HTML_BAD_REQUEST, "application/json")
             return
 
         """As default let SimpleHTTPServer look for the file. """
