@@ -25,22 +25,12 @@ angular.module('simpleMpdVoteClient', ['ionic', 'simpleMpdVoteClient.controllers
       controller: 'AppCtrl'
     })
 
-    .state('app.votelist', {
+    .state('app.vote', {
       url: "/vote",
       views: {
         'menuContent' :{
           templateUrl: "templates/vote.html",
           controller: 'VoteListCtrl'
-        }
-      }
-    })
-
-    .state('app.vote', {
-      url: "/vote/:mpdId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/vote.html",
-          controller: 'VoteCtrl'
         }
       }
     })

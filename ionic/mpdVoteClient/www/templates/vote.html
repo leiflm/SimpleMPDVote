@@ -8,15 +8,15 @@
 		<input ng-model="query">
 
 	</div>
-	<div class="span10">
-		<!--Body content-->
+		<div class="list">
+			<!--Body content-->
 
-		<ul class="playlist">
-			<li ng-repeat="item in playlist | filter:query">
-				{{item.artist}} - {{item.title}}
-			</li>
-		</ul>
-
-	</div>
+			<div class="item item-button-right" ng-repeat="item in playlist | filter:query">
+				 {{item.title}} ({{item.artist}})
+				<button class="button" ng-class="{true:'disabled', false:'positive', '':'hidden'}[wasVotedFor(item.mpdId)]" ng-click="vote({{item.mpdId}})">
+						<i class="icon ion-thumbsup"></i>				
+				</button>
+			</div>
+		</div>
   </ion-content>
 </ion-view>
