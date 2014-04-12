@@ -2,6 +2,7 @@ from PlaylistItem import PlaylistItem, JsonEncoder
 from MPDClientWrapper import MPDClientWrapper
 import mpd
 import json
+import threading
 
 MPD_HOST = "Kellerbar-Desktop.fritz.box"
 MPD_PORT = 6600
@@ -38,6 +39,7 @@ class BallotServer:
         return pl
 
     def updatePlaylist(self):
+        print ("Updating playlist".format())
         self.playlist = self.mergeVotePlaylistIntodMpdPlaylist()
 
         ''' 
@@ -101,10 +103,14 @@ class BallotServer:
         return json.dumps(self.playlist, cls=JsonEncoder)
         #return json.dumps(self.playlist.__dict__)
 
+    def setupTimer(self):
+        self.updatePlaylist()
+        threading.Timer(5, self.setupTimer).start()
+
     def __init__(self):
         # Connect to mpd
         print ("Connecting to MPD".format())
         self.mpdHandle = MPDClientWrapper(MPD_HOST, MPD_PORT)
-        print ("Updating playlist".format())
+        self.mpdHandle.consume(1)
         self.updatePlaylist()
-        
+        self.setupTimer()
