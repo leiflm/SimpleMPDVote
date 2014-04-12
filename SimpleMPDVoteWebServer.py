@@ -6,6 +6,7 @@ if sys.version_info < (3, 0, 0):
 else:
     import http.server as HTTPServer
 from BallotServer import BallotServer
+import urllib
 
 
 # Host name, for localhost leave name empty
@@ -47,6 +48,27 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
                 s.make_header(HTML_OK, "application/json")
                 s.wfile.write("<body>".encode('utf-8'))
                 s.wfile.write("<p>You voted: {0}</p>".format(song_id).encode('utf-8'))
+                s.wfile.write("</body></html>".encode('utf-8'))
+            except ValueError:
+                s.make_header(HTML_BAD_REQUEST, "application/json")
+            return
+
+        """http API"""
+        """return playlist as json """
+        if s.path.startswith("/library.json"):
+            s.make_header(HTML_OK, "application/json")
+            s.wfile.write(bs.getLibraryAsJson().encode('utf-8'))
+            return
+
+        """Process a vote with given id """
+        if s.path.startswith("/queue/"):
+            try:
+                url = s.path.replace("/queue/", "")
+                song_path=urllib.unquote(url).decode('utf8') 
+                bs.queueSong(song_path)
+                s.make_header(HTML_OK, "application/json")
+                s.wfile.write("<body>".encode('utf-8'))
+                s.wfile.write("<p>You queued: {0}</p>".format(song_path).encode('utf-8'))
                 s.wfile.write("</body></html>".encode('utf-8'))
             except ValueError:
                 s.make_header(HTML_BAD_REQUEST, "application/json")

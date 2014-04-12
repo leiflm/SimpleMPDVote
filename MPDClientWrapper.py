@@ -26,3 +26,17 @@ class MPDClientWrapper(mpd.MPDClient):
 		except mpd.ConnectionError:
 			self.connect(self._host, self._port)
 			return super(MPDClientWrapper, self).moveid(mpdId, pos)
+
+	def listallinfo(self):
+		try:
+			return super(MPDClientWrapper, self).listallinfo()
+		except mpd.ConnectionError:
+			self.connect(self._host, self._port)
+			return super(MPDClientWrapper, self).listallinfo()
+
+	def add(self, path):
+		try:
+			return super(MPDClientWrapper, self).add(path)
+		except mpd.ConnectionError:
+			self.connect(self._host, self._port)
+			return super(MPDClientWrapper, self).add(path)

@@ -39,4 +39,13 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 		var arr = $scope.votedList;
 		return (arr.indexOf(_mpdId) != -1)
 	}
+})
+
+.controller('LibraryCtrl', function($scope, $stateParams, ipCookie, MpdVoteServer) {
+	$scope.library = MpdVoteServer.library();
+	$scope.queue = function(_path) {
+	 	MpdVoteServer.queue({path: _path}, function(path) {
+	 		;
+	 	});
+	}
 });

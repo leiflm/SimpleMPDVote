@@ -103,6 +103,15 @@ class BallotServer:
         return json.dumps(self.playlist, cls=JsonEncoder)
         #return json.dumps(self.playlist.__dict__)
 
+    def getLibrary(self):
+        return self.mpdHandle.listallinfo()
+
+    def getLibraryAsJson(self):
+        return json.dumps(self.getLibrary(), cls=JsonEncoder)
+
+    def queueSong(self, path):
+        return self.mpdHandle.add(path)
+
     def setupTimer(self):
         self.updatePlaylist()
         threading.Timer(5, self.setupTimer).start()

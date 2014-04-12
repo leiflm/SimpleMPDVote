@@ -35,11 +35,12 @@ angular.module('simpleMpdVoteClient', ['ionic', 'simpleMpdVoteClient.controllers
       }
     })
 
-    .state('app.browse', {
-      url: "/browse",
+    .state('app.library', {
+      url: "/library",
       views: {
         'menuContent' :{
-          templateUrl: "templates/browse.html"
+          templateUrl: "templates/library.html",
+          controller: 'LibraryCtrl'
         }
       }
     })
