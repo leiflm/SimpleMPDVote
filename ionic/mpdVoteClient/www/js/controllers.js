@@ -1,4 +1,4 @@
-angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices', 'ngCookies'])
+angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices', 'ivpusic.cookie'])
 
 .controller('AppCtrl', function($scope) {
 })
@@ -14,25 +14,29 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
   ];
 })
 
-.controller('VoteListCtrl', function($scope, $stateParams, $cookies, MpdVoteServer) {
+.controller('VoteListCtrl', function($scope, $stateParams, ipCookie, MpdVoteServer) {
+	$scope.votedList = [];
 	$scope.playlist = MpdVoteServer.playlist();
-	if ($cookies.votedList !== undefined)
-		$scope.votedList = decodeURIComponent($cookies.votedList).split(",");
-	else
-		$scope.votedList = [];
+	var cookie = ipCookie('votedList');
+	if (cookie !== undefined) {
+		var arr = cookie.toString().split(',');
+		for (var i = 0; i < arr.length; i++) {
+			$scope.votedList.push(parseInt(arr[i]));
+		}
+	}
 	$scope.vote = function(_mpdId) {
 	 	MpdVoteServer.vote({mpdId: _mpdId}, function(mpdId) {
 	 		$scope.votedId = mpdId;
 
 	 		//append and push
-	 		$scope.votedList.push(_mpdId.toString());
-	 		$cookies.votedList = $scope.votedList.join();
+	 		$scope.votedList.push(_mpdId);
+	 		ipCookie('votedList', $scope.votedList.join(), { expires: 600, expirationUnit: 'minutes' });
 
 			$scope.playlist = MpdVoteServer.playlist();
 	 	});
 	}
 	$scope.wasVotedFor = function(_mpdId) {
 		var arr = $scope.votedList;
-		return (arr.indexOf(_mpdId.toString()) != -1)
+		return (arr.indexOf(_mpdId) != -1)
 	}
 });
