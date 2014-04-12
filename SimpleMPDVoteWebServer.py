@@ -1,5 +1,10 @@
 import time
-import http.server as HTTPServer
+import sys
+if sys.version_info < (3, 0, 0):
+    from BaseHTTPServer import HTTPServer as BaseHTTPServer
+    import SimpleHTTPServer as HTTPServer
+else:
+    import http.server as HTTPServer
 from BallotServer import BallotServer
 
 
@@ -74,7 +79,11 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-    server_class = HTTPServer.HTTPServer
+
+    if sys.version_info < (3, 0, 0):
+        server_class = BaseHTTPServer
+    else:
+        server_class = HTTPServer.HTTPServer
     httpd = server_class((VOTE_HOST_NAME, VOTE_PORT_NUMBER), VoteHandler)
     print ("{0} Server Starts - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
     
