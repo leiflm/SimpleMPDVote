@@ -16,7 +16,6 @@ class MPDClientWrapper(mpd.MPDClient):
 		try:
 			return super(MPDClientWrapper, self).playlistid()
 		except mpd.ConnectionError:
-			self.close()
 			self.connect(self._host, self._port)
 			return super(MPDClientWrapper, self).playlistid()
 
@@ -25,6 +24,5 @@ class MPDClientWrapper(mpd.MPDClient):
 		try:
 			return super(MPDClientWrapper, self).moveid(mpdId, pos)
 		except mpd.ConnectionError:
-			self.close()
 			self.connect(self._host, self._port)
 			return super(MPDClientWrapper, self).moveid(mpdId, pos)
