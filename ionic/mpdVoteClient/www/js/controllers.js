@@ -25,7 +25,7 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 	 		$scope.votedId = mpdId;
 
 	 		//append and push
-	 		$scope.votedList.push(_mpdId);
+	 		$scope.votedList.push(_mpdId.toString());
 	 		$cookies.votedList = $scope.votedList.join();
 
 			$scope.playlist = MpdVoteServer.playlist();
