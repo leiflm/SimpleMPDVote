@@ -49,6 +49,11 @@ class BallotServer:
                 # Check whether it was inserted by the operator
         '''
 
+    '''
+    Moves an item in the playlist according to its votes.
+    If it does so, it returns the new position. If the position remains
+    unchanged, -1 is returned
+    '''
     def swapAccordingToVotes(self, plItem):
         pl = self.playlist
         idx = pl.index(plItem)
@@ -62,15 +67,15 @@ class BallotServer:
             lessVotes = itemAbove
 
         if lessVotes == None:
-            return
+            return -1
         idx2 = pl.index(lessVotes)
         pl.insert(idx2, pl.pop(idx))
         self.mpdHandle.moveid(plItem.mpdId, idx2)
-        #print "Swapping to playlist position %i" % idx2
         print ("Swapping to playlist position {0}".format( idx2 ))
+        return idx2
 
     def voteForMpdId(self, mpdId):
-        success = False
+        newPos = -1
         if self.playlist == None:
             self.updatePlaylist()
 
@@ -78,9 +83,8 @@ class BallotServer:
             if plItem.mpdId != mpdId:
                 continue
             plItem.votes += 1
-            self.swapAccordingToVotes(plItem)
-            success = True
-        return success
+            newPos = self.swapAccordingToVotes(plItem)
+        return newPos
 
     def getPlaylist(self):
         return self.playlist
