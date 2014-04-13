@@ -70,7 +70,11 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         if s.path.startswith("/queue/"):
             try:
                 url = s.path.replace("/queue/", "")
-                song_path=urllib.unquote(url).decode('utf8') 
+                if sys.version_info < (3, 0, 0):
+                    song_path=urllib.unquote(url).decode('utf8')
+                else:
+                    song_path=urllib.parser.unquote(url, encoding='utf-8')
+
                 bs.queueSong(song_path)
                 s.make_header(HTML_OK, "application/json")
                 s.wfile.write("<body>".encode('utf-8'))
