@@ -1,3 +1,4 @@
+
 import time
 import sys
 if sys.version_info < (3, 0, 0):
@@ -7,9 +8,12 @@ else:
     import http.server as HTTPServer
 from BallotServer import BallotServer
 import urllib
+import QtTrayMenu
+import threading
 
 
 # Host name, for localhost leave name empty
+#VOTE_HOST_NAME = '192.168.178.44'
 VOTE_HOST_NAME = ''
 VOTE_PORT_NUMBER = 6601
 MPD_HOST = "Kellerbar-Desktop.fritz.box"
@@ -80,21 +84,29 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         HTTPServer.SimpleHTTPRequestHandler.do_GET(s)
         return
 
+class SimpleMPDVoteWebServer():
+    def close(self):
+        self.httpd.shutdown()
+        print ("{0} Server Stops - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
+
+    def run(self):
+        if sys.version_info < (3, 0, 0):
+            server_class = BaseHTTPServer
+        else:
+            server_class = HTTPServer.HTTPServer
+        self.httpd = server_class((VOTE_HOST_NAME, VOTE_PORT_NUMBER), VoteHandler)
+        print ("{0} Server Starts - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
+        self.httpd.serve_forever(poll_interval=0.5)
 
 if __name__ == '__main__':
 
-    if sys.version_info < (3, 0, 0):
-        server_class = BaseHTTPServer
-    else:
-        server_class = HTTPServer.HTTPServer
-    httpd = server_class((VOTE_HOST_NAME, VOTE_PORT_NUMBER), VoteHandler)
-    print ("{0} Server Starts - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
-    
     bs = BallotServer(MPD_HOST, MPD_PORT)
+    httpd = SimpleMPDVoteWebServer()
 
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    httpd.server_close()
-    print ("{0} Server Stops - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
+    httpd_th = threading.Thread(target=httpd.run).start()
+
+    stm = QtTrayMenu.SystemTrayIcon()
+    # start main loop
+    stm.run()
+
+    httpd.close()
