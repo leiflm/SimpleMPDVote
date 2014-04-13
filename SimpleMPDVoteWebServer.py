@@ -12,6 +12,8 @@ import urllib
 # Host name, for localhost leave name empty
 VOTE_HOST_NAME = ''
 VOTE_PORT_NUMBER = 6601
+MPD_HOST = "Kellerbar-Desktop.fritz.box"
+MPD_PORT = 6600
 
 HTML_OK = 200
 HTML_BAD_REQUEST = 400
@@ -88,7 +90,7 @@ if __name__ == '__main__':
     httpd = server_class((VOTE_HOST_NAME, VOTE_PORT_NUMBER), VoteHandler)
     print ("{0} Server Starts - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
     
-    bs = BallotServer()
+    bs = BallotServer(MPD_HOST, MPD_PORT)
 
     try:
         httpd.serve_forever()

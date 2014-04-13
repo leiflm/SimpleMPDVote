@@ -4,8 +4,6 @@ import mpd
 import json
 import threading
 
-MPD_HOST = "Kellerbar-Desktop.fritz.box"
-MPD_PORT = 6600
 class BallotServer:
 
     mpdHandle = None
@@ -112,10 +110,11 @@ class BallotServer:
         self.updatePlaylist()
         threading.Timer(5, self.setupTimer).start()
 
-    def __init__(self):
+    def __init__(self, host, port):
         # Connect to mpd
-        print ("Connecting to MPD".format())
-        self.mpdHandle = MPDClientWrapper(MPD_HOST, MPD_PORT)
+        print ("Connecting to MPD on {0}:{1}".format(host, port))
+        self.mpdHandle = MPDClientWrapper(host, port)
         self.mpdHandle.consume(1)
+        print ("Updating playlist".format())
         self.updatePlaylist()
         self.setupTimer()
