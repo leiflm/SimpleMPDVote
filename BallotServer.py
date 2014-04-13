@@ -50,15 +50,17 @@ class BallotServer:
         '''
 
     '''
-    Moves an item in the playlist according to its votes.
+    Moves the given item from its current position to the one behind another
+    song that has equally or more votes.
+
     If it does so, it returns the new position. If the position remains
     unchanged, -1 is returned
     If it does so, it returns the new position.
     e.g.: (True, 2)
     If the position remains unchanged, -1 is returned
-          (False, -1)
+          (True, -1)
     '''
-    def swapAccordingToVotes(self, plItem):
+    def moveFromBottomAccordingToVotes(self, plItem):
         pl = self.playlist
         idx = pl.index(plItem)
         aboveListReversed = pl[1:idx]
@@ -71,23 +73,36 @@ class BallotServer:
             lessVotes = itemAbove
 
         if lessVotes == None:
-            return (False, -1)
+            return (True, -1)
         idx2 = pl.index(lessVotes)
         pl.insert(idx2, pl.pop(idx))
         self.mpdHandle.moveid(plItem.mpdId, idx2)
         print ("Swapping to playlist position {0}".format( idx2 ))
         return (True, idx2)
 
+    '''
+    Moves an item in the playlist according to its votes.
+    If it does so, it returns the new position. If the position remains
+    unchanged, -1 is returned
+    If it does so, it returns the new position.
+    e.g.: (True, 2)
+    If the position remains unchanged, -1 is returned
+          (True, -1)
+    '''
     def voteForMpdId(self, mpdId):
         newPos = (False, -1)
+        found = False
+        plItem = None
         if self.playlist == None:
             self.updatePlaylist()
 
         for plItem in self.playlist:
-            if plItem.mpdId != mpdId:
-                continue
+            if plItem.mpdId == mpdId:
+                found = True
+                break
+        if found:
             plItem.votes += 1
-            newPos = self.swapAccordingToVotes(plItem)
+            newPos = self.moveFromBottomAccordingToVotes(plItem)
         return newPos
 
     def getPlaylist(self):
