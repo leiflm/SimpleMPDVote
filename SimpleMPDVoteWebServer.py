@@ -19,19 +19,19 @@ VOTE_PORT_NUMBER = 6601
 MPD_HOST = "Kellerbar-Desktop.fritz.box"
 MPD_PORT = 6600
 
-HTML_OK = 200
-HTML_BAD_REQUEST = 400
-HTML_NOT_FOUND = 404
+HTTP_OK = 200
+HTTP_BAD_REQUEST = 400
+HTTP_NOT_FOUND = 404
 
 class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
 
-    def make_header(s, response=HTML_NOT_FOUND, content_type="text/html"):
+    def make_header(s, response=HTTP_NOT_FOUND, content_type="text/html"):
         s.send_response(response)
         s.send_header("Content-type", content_type)
         s.end_headers()
 
     def do_HEAD(s):
-        s.make_header(HTML_OK, "text/html")
+        s.make_header(HTTP_OK, "text/html")
 
     """Respond to a GET request."""
     def do_GET(s):
@@ -42,7 +42,7 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         """http API"""
         """return playlist as json """
         if s.path.startswith("/playlist.json"):
-            s.make_header(HTML_OK, "application/json")
+            s.make_header(HTTP_OK, "application/json")
             s.wfile.write(bs.getPlaylistAsJson().encode('utf-8'))
             return
             
@@ -51,18 +51,18 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
             try:
                 song_id = int(float(s.path.replace("/vote/", "")))
                 bs.voteForMpdId(song_id)
-                s.make_header(HTML_OK, "application/json")
+                s.make_header(HTTP_OK, "application/json")
                 s.wfile.write("<body>".encode('utf-8'))
                 s.wfile.write("<p>You voted: {0}</p>".format(song_id).encode('utf-8'))
                 s.wfile.write("</body></html>".encode('utf-8'))
             except ValueError:
-                s.make_header(HTML_BAD_REQUEST, "application/json")
+                s.make_header(HTTP_BAD_REQUEST, "application/json")
             return
 
         """http API"""
         """return playlist as json """
         if s.path.startswith("/library.json"):
-            s.make_header(HTML_OK, "application/json")
+            s.make_header(HTTP_OK, "application/json")
             s.wfile.write(bs.getLibraryAsJson().encode('utf-8'))
             return
 
@@ -76,12 +76,12 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
                     song_path=urllib.parser.unquote(url, encoding='utf-8')
 
                 bs.queueSong(song_path)
-                s.make_header(HTML_OK, "application/json")
+                s.make_header(HTTP_OK, "application/json")
                 s.wfile.write("<body>".encode('utf-8'))
                 s.wfile.write("<p>You queued: {0}</p>".format(song_path).encode('utf-8'))
                 s.wfile.write("</body></html>".encode('utf-8'))
             except ValueError:
-                s.make_header(HTML_BAD_REQUEST, "application/json")
+                s.make_header(HTTP_BAD_REQUEST, "application/json")
             return
 
         """As default let SimpleHTTPServer look for the file. """
