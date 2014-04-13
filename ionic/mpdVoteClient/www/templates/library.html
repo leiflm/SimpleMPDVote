@@ -11,12 +11,12 @@
 		<div class="list">
 			<!--Body content-->
 
-			<div class="item item-button-right" ng-repeat="item in library | filter:query">
-				<span ng-switch="item">
-      				<div directive-one ng-switch-when="item.title">{{item.title}}</div>
-      				<div directive-one ng-switch-default>{{item.file}}</div>
-      			</span>
-				<button class="button button-clear button-positive" ng-click="queue(&quot;{{item.file}}&quot;)">
+			<div class="item item-button-right" ng-repeat="track in library | filter:query" class="ng-hide" ng-show="track.file">
+				<div ng-switch="libraryItemHasTitle(track)">
+      				<span ng-switch-when="true">{{track.title}}</span>
+      				<span ng-switch-default>{{track.file}}</span>
+      			</div>
+				<button class="button button-clear button-positive" ng-click="queue(&quot;{{track.file}}&quot;)">
 						<i class="icon ion-plus-circled"></i>				
 				</button>
 			</div>

@@ -48,4 +48,7 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 	 		;
 	 	});
 	}
+	$scope.libraryItemHasTitle = function(item) {
+		return (item.title !== undefined);
+	}
 });
