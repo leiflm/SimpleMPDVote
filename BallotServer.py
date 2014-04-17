@@ -37,7 +37,9 @@ class BallotServer:
         return pl
 
     def updatePlaylist(self):
+        self.listLock.acquire()
         self.votedPlaylist = self.mergeVotePlaylistIntodMpdPlaylist()
+        self.listLock.release()
 
         ''' 
             Create new playlist, incorporating operator changes
@@ -123,13 +125,21 @@ class BallotServer:
 
     def setupTimer(self):
         self.updatePlaylist()
-        threading.Timer(5, self.setupTimer).start()
+        if not self.timerStop:
+            self.timer = threading.Timer(5, self.setupTimer)
+            self.timer.start()
 
     def __init__(self, host, port):
         # Connect to mpd
         print ("Connecting to MPD on {0}:{1}".format(host, port))
         self.mpdHandle = MPDClientWrapper(host, port)
         self.mpdHandle.consume(1)
+        self.listLock = threading.Lock()
         print ("Updating playlist".format())
         self.updatePlaylist()
+        self.timerStop = False
         self.setupTimer()
+
+    def close(self):
+        self.timerStop = True
+        self.timer.cancel()
