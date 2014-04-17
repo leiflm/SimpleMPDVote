@@ -68,7 +68,6 @@ class BallotServer:
         aboveListReversed = pl[1:idx]
         aboveListReversed.reverse()
 
-        print (plItem.format())
         if len(aboveListReversed) <= 1:
             return (True, -1)
         lessVotes = aboveListReversed[0]
