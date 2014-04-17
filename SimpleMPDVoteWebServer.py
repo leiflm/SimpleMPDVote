@@ -50,11 +50,12 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         if s.path.startswith("/vote/"):
             try:
                 song_id = int(float(s.path.replace("/vote/", "")))
-                bs.voteForMpdId(song_id)
-                s.make_header(HTTP_OK, "application/json")
-                s.wfile.write("<body>".encode('utf-8'))
-                s.wfile.write("<p>You voted: {0}</p>".format(song_id).encode('utf-8'))
-                s.wfile.write("</body></html>".encode('utf-8'))
+                (songIdExists, newPosition) = bs.voteForMpdId(song_id)
+                if songIdExists:
+                    s.make_header(HTTP_OK, "application/json")
+                    s.wfile.write("{{ \"newPosition\": {0} }}".format(newPosition).encode('utf-8'))
+                else:
+                    s.send_response(HTTP_NOT_FOUND)
             except ValueError:
                 s.make_header(HTTP_BAD_REQUEST, "application/json")
             return
