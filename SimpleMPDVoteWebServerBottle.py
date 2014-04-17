@@ -10,7 +10,13 @@ HTTP_NOT_FOUND = 404
 class SimpleMPDVoteWebServer():
 
     def __init__(self):
-        app = Bottle()
+        self.voting_disabled = False
+        self.bs = BallotServer('localhost', 6600)
+        self.app = Bottle()
+        self.setup_routes()
+
+    def setup_routes(self):
+        app = self.app
         
         @app.get('/library.json')
         def playlist():
@@ -28,14 +34,14 @@ class SimpleMPDVoteWebServer():
 
         @app.route('/vote/deactivate')
         def deactivate():
-            if request.remote_address != '127.0.0.1': #watchout, this is IPv4 :-/
+            if request.remote_addr != '127.0.0.1': #watchout, this is IPv4 :-/
                 abort(HTTP_FORBIDDEN, "Sorry, you're not allowed to deactivate the voting service!")
             self.voting_disabled = True
             print "Voting disabled"
 
         @app.route('/vote/activate')
         def deactivate():
-            if request.remote_address != '127.0.0.1': #watchout, this is IPv4 :-/
+            if request.remote_addr != '127.0.0.1': #watchout, this is IPv4 :-/
                 abort(HTTP_FORBIDDEN, "Sorry, you're not allowed to activate the voting service!")
             self.voting_disabled = False
             print "Voting enabled"
@@ -63,11 +69,6 @@ class SimpleMPDVoteWebServer():
             if self.voting_disabled:
                 abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
             redirect('/index.html')
-
-        """ Finally set up instance """
-        self.voting_disabled = False
-        self.bs = BallotServer('localhost', 6600)
-        self.app = app
 
     def run(self, host, port):
         run(self.app, host='localhost', port=8080)
