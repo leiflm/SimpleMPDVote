@@ -1,5 +1,6 @@
 from PyQt4 import (QtGui, QtCore)
 import sys
+import SimpleMPDVoteMain
 
 class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
@@ -16,15 +17,18 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         self.w = QtGui.QWidget()
         self.icon = QtGui.QIcon("img/ionic.png")
         self.trayIcon = QtGui.QSystemTrayIcon.__init__(self, self.icon, self.w)
-        menu = QtGui.QMenu(parent)
-        otherAction = menu.addAction("other")
-        exitAction = menu.addAction("Exit")
-        self.setContextMenu(menu)
-        self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.exit)
-        self.connect(otherAction, QtCore.SIGNAL('triggered()'), self.other)
-        self.menu = menu
+        self.menu = QtGui.QMenu(parent)
 
-    def run(self):
+        mpdStatus = self.menu.addAction("Disconnected")
+
+        otherAction = self.menu.addAction("other")
+        self.connect(otherAction, QtCore.SIGNAL('triggered()'), self.other)
+        exitAction = self.menu.addAction("Exit")
+        self.setContextMenu(self.menu)
+        self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.exit)
+
+    def run(self, app):
+        self.connect(self.app, QtCore.SIGNAL('aboutToQuit()'),  app.quit)
         self.show()
         self.app.exec_()
 

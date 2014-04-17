@@ -1,4 +1,3 @@
-
 import time
 import sys
 if sys.version_info < (3, 0, 0):
@@ -8,16 +7,7 @@ else:
     import http.server as HTTPServer
 from BallotServer import BallotServer
 import urllib
-import QtTrayMenu
-import threading
 
-
-# Host name, for localhost leave name empty
-#VOTE_HOST_NAME = '192.168.178.44'
-VOTE_HOST_NAME = ''
-VOTE_PORT_NUMBER = 6601
-MPD_HOST = "Kellerbar-Desktop.fritz.box"
-MPD_PORT = 6600
 
 HTTP_OK = 200
 HTTP_BAD_REQUEST = 400
@@ -92,26 +82,19 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
 class SimpleMPDVoteWebServer():
     def close(self):
         self.httpd.shutdown()
-        print ("{0} Server Stops - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
+        print ("{0} Server Stops - {1}:{2}".format(time.asctime(), self.host, self.port))
 
-    def run(self):
+    def run(self, host, port):
+
+        self.host = host
+        self.port = port
+
         if sys.version_info < (3, 0, 0):
             server_class = BaseHTTPServer
         else:
             server_class = HTTPServer.HTTPServer
-        self.httpd = server_class((VOTE_HOST_NAME, VOTE_PORT_NUMBER), VoteHandler)
-        print ("{0} Server Starts - {1}:{2}".format(time.asctime(), VOTE_HOST_NAME, VOTE_PORT_NUMBER))
+        self.httpd = server_class((self.host, self.port), VoteHandler)
+        print ("{0} Server Starts - {1}:{2}".format(time.asctime(), self.host, self.port))
         self.httpd.serve_forever(poll_interval=0.5)
+        print ("now forever returned")
 
-if __name__ == '__main__':
-
-    bs = BallotServer(MPD_HOST, MPD_PORT)
-    httpd = SimpleMPDVoteWebServer()
-
-    httpd_th = threading.Thread(target=httpd.run).start()
-
-    stm = QtTrayMenu.SystemTrayIcon()
-    # start main loop
-    stm.run()
-
-    httpd.close()
