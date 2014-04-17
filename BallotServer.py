@@ -37,7 +37,7 @@ class BallotServer:
         return pl
 
     def updatePlaylist(self):
-        self.playlist = self.mergeVotePlaylistIntodMpdPlaylist()
+        self.votedPlaylist = self.mergeVotePlaylistIntodMpdPlaylist()
 
         ''' 
             Create new playlist, incorporating operator changes
@@ -61,23 +61,26 @@ class BallotServer:
           (True, -1)
     '''
     def moveFromBottomAccordingToVotes(self, plItem):
-        pl = self.playlist
+        pl = self.votedPlaylist
         idx = pl.index(plItem)
         aboveListReversed = pl[1:idx]
         aboveListReversed.reverse()
-        lessVotes = None
+
+        print plItem
+        if len(aboveListReversed) <= 1:
+            return (True, -1)
+        lessVotes = aboveListReversed[0]
 
         for itemAbove in aboveListReversed:
-            if itemAbove.votes > plItem.votes:
+            if itemAbove.votes >= plItem.votes:
                 break
-            lessVotes = itemAbove
+            else:
+                lessVotes = itemAbove
 
-        if lessVotes == None:
-            return (True, -1)
         idx2 = pl.index(lessVotes)
         pl.insert(idx2, pl.pop(idx))
         self.mpdHandle.moveid(plItem.mpdId, idx2)
-        print ("Swapping to playlist position {0}".format( idx2 ))
+        print ("moving track from {0} to playlist position {1}".format(idx, idx2))
         return (True, idx2)
 
     '''
@@ -90,27 +93,24 @@ class BallotServer:
           (True, -1)
     '''
     def voteForMpdId(self, mpdId):
-        newPos = (False, -1)
-        found = False
-        plItem = None
-        if self.playlist == None:
+        voteSuccess = (False, -1)
+        if self.votedPlaylist == None:
             self.updatePlaylist()
+        pl = self.votedPlaylist
 
-        for plItem in self.playlist:
-            if plItem.mpdId == mpdId:
-                found = True
+        for track in pl:
+            if track.mpdId == mpdId:
+                track.votes += 1
+                voteSuccess = self.moveFromBottomAccordingToVotes(track)
                 break
-        if found:
-            plItem.votes += 1
-            newPos = self.moveFromBottomAccordingToVotes(plItem)
-        return newPos
+        return voteSuccess
 
     def getPlaylist(self):
-        return self.playlist
+        return self.votedPlaylist
 
     def getPlaylistAsJson(self):
-        return json.dumps(self.playlist, cls=JsonEncoder)
-        #return json.dumps(self.playlist.__dict__)
+        return json.dumps(self.votedPlaylist, cls=JsonEncoder)
+        #return json.dumps(self.votedPlaylist.__dict__)
 
     def getLibrary(self):
         return self.mpdHandle.listallinfo()
