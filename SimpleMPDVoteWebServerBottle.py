@@ -69,10 +69,6 @@ class SimpleMPDVoteWebServer():
         self.bs = BallotServer('localhost', 6600)
         self.app = app
 
-    def close(self):
-        self.httpd.shutdown()
-        print ("{0} Server Stops - {1}:{2}".format(time.asctime(), self.host, self.port))
-
     def run(self, host, port):
         run(self.app, host='localhost', port=8080)
 
