@@ -3,8 +3,10 @@ import sys
 if sys.version_info < (3, 0, 0):
     from BaseHTTPServer import HTTPServer as BaseHTTPServer
     import SimpleHTTPServer as HTTPServer
+    server_class = BaseHTTPServer
 else:
     import http.server as HTTPServer
+    server_class = HTTPServer.HTTPServer
 from BallotServer import BallotServer
 import urllib
 
@@ -33,14 +35,14 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         """return playlist as json """
         if s.path.startswith("/playlist.json"):
             s.make_header(HTTP_OK, "application/json")
-            s.wfile.write(bs.getPlaylistAsJson().encode('utf-8'))
+            s.wfile.write(s.server.bs.getPlaylistAsJson().encode('utf-8'))
             return
             
         """Process a vote with given id """
         if s.path.startswith("/vote/"):
             try:
                 song_id = int(float(s.path.replace("/vote/", "")))
-                (songIdExists, newPosition) = bs.voteForMpdId(song_id)
+                (songIdExists, newPosition) = s.server.bs.voteForMpdId(song_id)
                 if songIdExists:
                     s.make_header(HTTP_OK, "application/json")
                     s.wfile.write("{{ \"newPosition\": {0} }}".format(newPosition).encode('utf-8'))
@@ -54,7 +56,7 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         """return playlist as json """
         if s.path.startswith("/library.json"):
             s.make_header(HTTP_OK, "application/json")
-            s.wfile.write(bs.getLibraryAsJson().encode('utf-8'))
+            s.wfile.write(s.server.bs.getLibraryAsJson().encode('utf-8'))
             return
 
         """Process a vote with given id """
@@ -66,7 +68,7 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
                 else:
                     song_path=urllib.parser.unquote(url, encoding='utf-8')
 
-                bs.queueSong(song_path)
+                s.server.bs.queueSong(song_path)
                 s.make_header(HTTP_OK, "application/json")
                 s.wfile.write("<body>".encode('utf-8'))
                 s.wfile.write("<p>You queued: {0}</p>".format(song_path).encode('utf-8'))
@@ -79,22 +81,23 @@ class VoteHandler(HTTPServer.SimpleHTTPRequestHandler):
         HTTPServer.SimpleHTTPRequestHandler.do_GET(s)
         return
 
-class SimpleMPDVoteWebServer():
+class SimpleMPDVoteWebServer(server_class):
+
+    def __init__(self):
+        pass
+
     def close(self):
-        self.httpd.shutdown()
+        self.shutdown()
         print ("{0} Server Stops - {1}:{2}".format(time.asctime(), self.host, self.port))
 
-    def run(self, host, port):
-
+    def run(self, host, port, bs):
         self.host = host
         self.port = port
-
-        if sys.version_info < (3, 0, 0):
-            server_class = BaseHTTPServer
-        else:
-            server_class = HTTPServer.HTTPServer
-        self.httpd = server_class((self.host, self.port), VoteHandler)
-        print ("{0} Server Starts - {1}:{2}".format(time.asctime(), self.host, self.port))
-        self.httpd.serve_forever(poll_interval=0.5)
-        print ("now forever returned")
+        self.bs = bs
+        try:
+            super(SimpleMPDVoteWebServer, self).__init__((self.host, self.port), VoteHandler)
+            print ("{0} Server Starts - {1}:{2}".format(time.asctime(), self.host, self.port))
+            self.serve_forever(poll_interval=0.5)
+        except e:
+            print ("{0} Server failed to starts - {1}:{2} {3}".format(time.asctime(), self.host, self.port, e))
 

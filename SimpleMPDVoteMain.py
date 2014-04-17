@@ -9,7 +9,7 @@ import SimpleMPDVoteWebServer as WebServer
 # Host name, for localhost leave name empty
 VOTE_HOST_NAME = ''
 VOTE_PORT_NUMBER = 6601
-MPD_HOST = "Kellerbar-desktop.fritz.box"
+MPD_HOST = "leifs-air"
 MPD_PORT = 6600
 
 
@@ -31,7 +31,7 @@ class SimpleMPDVoteApp():
             print ("Could not connect to MPD at {0}:{1}".format(self.mpd_host, self.mpd_port))
 
     def start_web_server(self):
-        self.httpd_th = threading.Thread(target=self.httpd.run, args=(self.web_host, self.web_port))
+        self.httpd_th = threading.Thread(target=self.httpd.run, args=(self.web_host, self.web_port, self.bs))
         self.httpd_th.start()
 
     def stop_web_server(self):
