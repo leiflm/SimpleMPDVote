@@ -34,14 +34,14 @@ class SimpleMPDVoteWebServer():
 
         @app.route('/vote/deactivate')
         def deactivate():
-            if request.remote_addr != '127.0.0.1': #watchout, this is IPv4 :-/
+            if request.remote_addr != '127.0.0.1' and request.remote_addr != '::1':
                 abort(HTTP_FORBIDDEN, "Sorry, you're not allowed to deactivate the voting service!")
             self.voting_disabled = True
             print "Voting disabled"
 
         @app.route('/vote/activate')
         def deactivate():
-            if request.remote_addr != '127.0.0.1': #watchout, this is IPv4 :-/
+            if request.remote_addr != '127.0.0.1' and request.remote_addr != '::1':
                 abort(HTTP_FORBIDDEN, "Sorry, you're not allowed to activate the voting service!")
             self.voting_disabled = False
             print "Voting enabled"
