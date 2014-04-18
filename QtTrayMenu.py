@@ -1,8 +1,9 @@
-from PyQt4 import (QtGui, QtCore)
+from PyQt4.QtCore import SIGNAL
+from PyQt4.QtGui import QApplication, QWidget, QSystemTrayIcon, QMenu, QIcon
 import sys
 import SimpleMPDVoteMain
 
-class SystemTrayIcon(QtGui.QSystemTrayIcon):
+class SystemTrayIcon(QSystemTrayIcon):
 
     def exit(self):
 
@@ -13,22 +14,22 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         return 0
 
     def __init__(self, parent=None):
-        self.app = QtGui.QApplication(sys.argv)
-        self.w = QtGui.QWidget()
-        self.icon = QtGui.QIcon("img/ionic.png")
-        self.trayIcon = QtGui.QSystemTrayIcon.__init__(self, self.icon, self.w)
-        self.menu = QtGui.QMenu(parent)
+        self.app = QApplication(sys.argv)
+        self.w = QWidget()
+        self.icon = QIcon("img/ionic.png")
+        self.trayIcon = QSystemTrayIcon.__init__(self, self.icon, self.w)
+        self.menu = QMenu(parent)
 
         mpdStatus = self.menu.addAction("Disconnected")
 
         otherAction = self.menu.addAction("other")
-        self.connect(otherAction, QtCore.SIGNAL('triggered()'), self.other)
+        self.connect(otherAction, SIGNAL('triggered()'), self.other)
         exitAction = self.menu.addAction("Exit")
         self.setContextMenu(self.menu)
-        self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.exit)
+        self.connect(exitAction, SIGNAL('triggered()'), self.exit)
 
     def run(self, app):
-        self.connect(self.app, QtCore.SIGNAL('aboutToQuit()'),  app.quit)
+        self.connect(self.app, SIGNAL('aboutToQuit()'),  app.quit)
         self.show()
         self.app.exec_()
 
