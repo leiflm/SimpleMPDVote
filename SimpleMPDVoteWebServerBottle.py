@@ -46,6 +46,10 @@ class SimpleMPDVoteWebServer():
             self.voting_disabled = False
             print "Voting enabled"
 
+        @app.route('/vote/status')
+        def vote_status():
+            return str(not self.voting_disabled)
+
         """Process a vote with given id """
         @app.get('/vote/<mpdId:int>')
         def vote(mpdId = -1):
