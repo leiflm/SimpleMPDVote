@@ -40,3 +40,10 @@ class MPDClientWrapper(mpd.MPDClient):
 		except mpd.ConnectionError:
 			self.connect(self._host, self._port)
 			return super(MPDClientWrapper, self).add(path)
+
+	def lsinfo(self, path):
+		try:
+			return super(MPDClientWrapper, self).lsinfo(path)
+		except mpd.ConnectionError:
+			self.connect(self._host, self._port)
+			return super(MPDClientWrapper, self).lsinfo(path)

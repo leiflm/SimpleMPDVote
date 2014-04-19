@@ -1,5 +1,7 @@
 from BallotServer import BallotServer
 import urllib
+import json
+import sys
 from bottle import Bottle, run, get, request, response, static_file, redirect, abort
 
 HTTP_OK = 200
@@ -17,7 +19,36 @@ class SimpleMPDVoteWebServer():
 
     def setup_routes(self):
         app = self.app
-        
+
+
+        @app.get('/browse')
+        @app.get('/browse/')
+        @app.get('/browse/<path:path>')
+        def browsePath(path = '/'):
+            if self.voting_disabled:
+                abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
+            response.content_type = 'application/json'
+            if sys.version_info < (3, 0, 0):
+                path=urllib.unquote(path).decode('utf8')
+            else:
+                path=urllib.parser.unquote(path, encoding='utf-8')
+            listing = self.bs.getLsInfo(path)
+            return json.dumps(listing)
+
+        """ Add a file to the playlist """
+        @app.get('/queue/<path:path>')
+        def queueFile(path = None):
+            if self.voting_disabled:
+                abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
+            if not path:
+                abort(HTTP_NOT_FOUND, "The file you tried to queue does not exist!")
+
+            if sys.version_info < (3, 0, 0):
+                song_path=urllib.unquote(path).decode('utf8')
+            else:
+                song_path=urllib.parser.unquote(path, encoding='utf-8')
+            self.bs.queueSong(song_path)
+
         @app.get('/library.json')
         def playlist():
             if self.voting_disabled:

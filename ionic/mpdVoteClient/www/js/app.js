@@ -44,12 +44,13 @@ angular.module('simpleMpdVoteClient', ['ionic', 'simpleMpdVoteClient.controllers
         }
       }
     })
-    .state('app.playlists', {
-      url: "/playlists",
+
+    .state('app.browse', {
+      url: "/browse*mpdPath",
       views: {
         'menuContent' :{
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
+          templateUrl: "templates/browse.html",
+          controller: 'BrowseCtrl'
         }
       }
     })

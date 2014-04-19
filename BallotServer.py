@@ -106,6 +106,9 @@ class BallotServer:
                 break
         return voteSuccess
 
+    def getLsInfo(self, path):
+        return self.mpdHandle.lsinfo(path)
+
     def getPlaylist(self):
         return self.votedPlaylist
 

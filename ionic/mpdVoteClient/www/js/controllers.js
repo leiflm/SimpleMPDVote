@@ -3,15 +3,29 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 .controller('AppCtrl', function($scope) {
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('BrowseCtrl', function($scope, $stateParams, MpdVoteServer) {
+	var _path = '';
+
+	if ($stateParams.mpdPath !== undefined)
+		_path = $stateParams.mpdPath;
+	_path = _path.replace(/\//, "");
+
+	$scope.listing = MpdVoteServer.browse({path: _path});
+
+	$scope.getType = function(item) {
+		if (item['directory'] !== undefined)
+			return "directory";
+		else if (item['file'] !== undefined)
+			return "file";
+	}
+	$scope.queue = function(_path) {
+	 	MpdVoteServer.queue({path: _path}, function(path) {
+	 		;
+	 	});
+	}
+	$scope.libraryItemHasTitle = function(item) {
+		return (item.title !== undefined);
+	}
 })
 
 .controller('VoteListCtrl', function($scope, $stateParams, ipCookie, MpdVoteServer) {
