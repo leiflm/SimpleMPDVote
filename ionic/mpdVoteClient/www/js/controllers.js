@@ -38,7 +38,7 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
             var plItem = $scope.playlist[idx];
 
 	 		//append and push
-	 		$scope.votedList.push(idx);
+	 		$scope.votedList.push(_mpdId);
 	 		ipCookie('votedList', $scope.votedList.join(), { expires: 600, expirationUnit: 'minutes' });
 
             if (newPosition == "-1") {
