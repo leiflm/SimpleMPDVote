@@ -23,14 +23,14 @@ class SimpleMPDVoteWebServer():
             if self.voting_disabled:
                 abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
             response.content_type = 'application/json'
-            return self.bs.getLibraryAsJson().encode('utf-8')
+            return self.bs.getLibraryAsJson()
 
         @app.get('/playlist.json')
         def playlist():
             if self.voting_disabled:
                 abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
             response.content_type = 'application/json'
-            return self.bs.getPlaylistAsJson().encode('utf-8')
+            return self.bs.getPlaylistAsJson()
 
         @app.route('/vote/deactivate')
         def deactivate():
