@@ -24,16 +24,44 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 			$scope.votedList.push(parseInt(arr[i]));
 		}
 	}
+    $scope.getIndexForMpdId = function(mpdId) {
+        for (var i = 0; i < $scope.playlist.length; i++) {
+            if ($scope.playlist[i].mpdId == mpdId)
+                return i;
+        }
+        return -1;
+    }
 	$scope.vote = function(_mpdId) {
-	 	MpdVoteServer.vote({mpdId: _mpdId}, function(mpdId) {
-	 		$scope.votedId = mpdId;
+	 	MpdVoteServer.vote({mpdId: _mpdId}, function(response) {
+            var newPosition = response['newPosition'];
+            var idx = $scope.getIndexForMpdId(_mpdId);
+            var plItem = $scope.playlist[idx];
 
 	 		//append and push
-	 		$scope.votedList.push(_mpdId);
+	 		$scope.votedList.push(idx);
 	 		ipCookie('votedList', $scope.votedList.join(), { expires: 600, expirationUnit: 'minutes' });
 
-			$scope.playlist = MpdVoteServer.playlist();
-	 	});
+            if (newPosition == "-1") {
+                // didn't move, so just return
+                return;
+            }
+
+            //update playlist
+            $scope.playlist.splice(idx, 1);
+            $scope.playlist.splice(newPosition, 0, plItem);
+	 	}, function(fail_response) {
+            var newPosition = response['newPosition'];
+            var idx = $scope.getIndexForMpdId(_mpdId);
+            if (idx == -1) {
+                // vote request was sent and in the meanwhile the playlist was refreshed or similar
+                return;
+            }
+            if (newPosition == "-1") {
+                alert('Sorry, that song is not in the playlist any longer :-/');
+                $scope.playlist.splice(idx,1)
+                return;
+            }
+        });
 	}
 	$scope.wasVotedFor = function(_mpdId) {
 		var arr = $scope.votedList;

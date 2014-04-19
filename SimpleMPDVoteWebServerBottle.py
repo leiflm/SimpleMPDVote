@@ -57,7 +57,7 @@ class SimpleMPDVoteWebServer():
                 abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
             (songIdExists, newPosition) = self.bs.voteForMpdId(mpdId)
             if songIdExists:
-                return str(newPosition)
+                return {"newPosition": newPosition}
             else:
                 abort(HTTP_NOT_FOUND, "The song with id {0} does not exist".format(mpdId))
 
