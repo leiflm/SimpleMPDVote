@@ -9,16 +9,17 @@ class PlaylistItem:
     artist = "Unknown Artist"
     title = "Unkown Title"
 
-    def __init__(self, mpdId, votes, posByOperator, artist, title):
+    def __init__(self, mpdId, votes, posByOperator, artist, title, file):
         self.mpdId = mpdId
         self.votes = votes
         self.playlistPosSetByOperator = posByOperator
         self.artist = artist
         self.title = title
+        self.file = file
 
 class JsonEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, PlaylistItem):
-            return obj.__dict__
+            return {"mpdId" : obj.mpdId, "votes": obj.votes, "artist": obj.artist, "title": obj.title}
         # Let the base class default method raise the TypeError
         return json.JSONEncoder.default(self, obj)

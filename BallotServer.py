@@ -9,6 +9,16 @@ class BallotServer:
     mpdHandle = None
     votedPlaylist = None
 
+    """ Returns the playlist position of a file if found, else -1 """
+    def getIndexForFile(self, file):
+        pl = self.votedPlaylist
+        if file == None:
+            return -1
+        for i in xrange(0, len(pl)):
+            if pl[i].file == file:
+                return i
+        return -1
+
     def mergeVotePlaylistIntodMpdPlaylist(self):
         mpdPl = self.mpdHandle.playlistid()
         pl = list()
@@ -16,6 +26,7 @@ class BallotServer:
         for plItem in mpdPl:
             artist = plItem.get('artist', "Unkown Artist")
             title = plItem.get('title', plItem['file'])
+            file = plItem['file']
             votes = 0
             operatorPos = None
             found = False
@@ -33,7 +44,7 @@ class BallotServer:
                     votes = vitem.votes
                     operatorPos = vitem.playlistPosSetByOperator
 
-            pl.append(PlaylistItem(mpdId, votes, operatorPos, artist, title))
+            pl.append(PlaylistItem(mpdId, votes, operatorPos, artist, title, file))
         return pl
 
     def updatePlaylist(self):
@@ -122,8 +133,19 @@ class BallotServer:
     def getLibraryAsJson(self):
         return json.dumps(self.getLibrary(), cls=JsonEncoder)
 
+    """ return value: (bool, int) = (SongQueued, PlaylistPosition) """
     def queueSong(self, path):
-        return self.mpdHandle.add(path)
+        # maybe it's already queued
+        index = self.getIndexForFile(path)
+        if index != -1:
+            return (False, index + 1)
+        # try to add it and get the index afterwards
+        try:
+            self.mpdHandle.add(path)
+            self.updatePlaylist()
+        except mpd.CommandError:
+            (False, -1)
+        return (True, self.getIndexForFile(path) + 1)
 
     def searchFile(self, query):
         return self.mpdHandle.search("file", query)

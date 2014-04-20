@@ -19,8 +19,10 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 			return "file";
 	}
 	$scope.queue = function(_path) {
-	 	MpdVoteServer.queue({path: _path}, function(path) {
-	 		;
+	 	MpdVoteServer.queue({path: _path}, function (response) {
+	 		if (!response.queued && (response.playlistPosition != -1)) {
+	 			alert('This song is already in the playlist! (#' + response.playlistPosition + ')');
+	 		}
 	 	});
 	}
 	$scope.libraryItemHasTitle = function(item) {
@@ -100,6 +102,10 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 	}
 
 	$scope.queue = function(_path) {
-	 	MpdVoteServer.queue({path: _path});
+	 	MpdVoteServer.queue({path: _path}, function (response) {
+	 		if (!response.songQueued && (response.playlistPosition != -1)) {
+	 			alert('This song is already in the playlist! (#' + response.playlistPosition + ')');
+	 		}
+	 	});
 	}
 });

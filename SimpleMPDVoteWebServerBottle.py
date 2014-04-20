@@ -47,7 +47,10 @@ class SimpleMPDVoteWebServer():
                 song_path=urllib.unquote(path).decode('utf8')
             else:
                 song_path=urllib.parser.unquote(path, encoding='utf-8')
-            self.bs.queueSong(song_path)
+            (songQueued, playlistPosition) = self.bs.queueSong(song_path)
+            if not songQueued and playlistPosition == -1:
+                abort(HTTP_NOT_FOUND, "The file you tried to queue does not exist!")
+            return { "songQueued": songQueued, "playlistPosition": playlistPosition }
 
 
         """ Search in the database """
