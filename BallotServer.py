@@ -125,6 +125,9 @@ class BallotServer:
     def queueSong(self, path):
         return self.mpdHandle.add(path)
 
+    def searchFile(self, query):
+        return self.mpdHandle.search("file", query)
+
     def setupTimer(self):
         self.updatePlaylist()
         if not self.timerStop:

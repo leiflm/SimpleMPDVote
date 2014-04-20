@@ -47,3 +47,10 @@ class MPDClientWrapper(mpd.MPDClient):
 		except mpd.ConnectionError:
 			self.connect(self._host, self._port)
 			return super(MPDClientWrapper, self).lsinfo(path)
+
+	def search(self, type, query):
+		try:
+			return super(MPDClientWrapper, self).search(type, query)
+		except mpd.ConnectionError:
+			self.connect(self._host, self._port)
+			return super(MPDClientWrapper, self).search(type, query)

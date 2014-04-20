@@ -83,14 +83,23 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 	}
 })
 
-.controller('LibraryCtrl', function($scope, $stateParams, ipCookie, MpdVoteServer) {
-	$scope.library = MpdVoteServer.library();
+.controller('SearchCtrl', function($scope, MpdVoteServer) {
+	$scope.queryString = "";
+	$scope.resultset = [];
+
 	$scope.queue = function(_path) {
 	 	MpdVoteServer.queue({path: _path}, function(path) {
 	 		;
 	 	});
 	}
-	$scope.libraryItemHasTitle = function(item) {
+	$scope.itemHasTitle = function(item) {
 		return (item.title !== undefined);
+	}
+	$scope.query = function(_queryString) {
+		$scope.resultset = MpdVoteServer.searchFile({query: _queryString});
+	}
+
+	$scope.queue = function(_path) {
+	 	MpdVoteServer.queue({path: _path});
 	}
 });

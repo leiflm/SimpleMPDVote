@@ -49,6 +49,21 @@ class SimpleMPDVoteWebServer():
                 song_path=urllib.parser.unquote(path, encoding='utf-8')
             self.bs.queueSong(song_path)
 
+
+        """ Search in the database """
+        @app.get('/search/<path>')
+        def searchFile(path = None):
+            if self.voting_disabled:
+                abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
+            if not path:
+                abort(HTTP_OK, "[{{}}}]")
+
+            if sys.version_info < (3, 0, 0):
+                query=urllib.unquote(path).decode('utf8')
+            else:
+                query=urllib.parser.unquote(path, encoding='utf-8')
+            return json.dumps(self.bs.searchFile(query))
+
         @app.get('/library.json')
         def playlist():
             if self.voting_disabled:
