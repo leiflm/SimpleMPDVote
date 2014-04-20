@@ -20,7 +20,7 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 	}
 	$scope.queue = function(_path) {
 	 	MpdVoteServer.queue({path: _path}, function (response) {
-	 		if (!response.queued && (response.playlistPosition != -1)) {
+	 		if (!response.songQueued && (response.playlistPosition != -1)) {
 	 			alert('This song is already in the playlist! (#' + response.playlistPosition + ')');
 	 		}
 	 	});
