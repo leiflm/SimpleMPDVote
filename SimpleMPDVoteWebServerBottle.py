@@ -123,9 +123,9 @@ class SimpleMPDVoteWebServer():
                 abort(HTTP_NOT_FOUND, "Sorry voting is currently disabled!")
             redirect('/index.html')
 
-    def run(self, host, port):
-        run(self.app, host='localhost', port=8080)
+    def run(self, host='', port=8080):
+        run(self.app, host, port)
 
 if __name__ == '__main__':
     s = SimpleMPDVoteWebServer()
-    s.run('localhost', 8080)
+    s.run('', 8080)
