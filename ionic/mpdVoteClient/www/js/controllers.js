@@ -98,6 +98,10 @@ angular.module('simpleMpdVoteClient.controllers', ['simpleMpdVoteClientServices'
 		return (item.title !== undefined);
 	}
 	$scope.query = function(_queryString) {
+		// do not query strings shorter than 3 characters
+		if (_queryString.length < 3) {
+			return;
+		}
 		$scope.resultset = MpdVoteServer.searchFile({query: _queryString});
 	}
 
