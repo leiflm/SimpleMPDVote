@@ -14,7 +14,7 @@ class BallotServer:
         pl = self.votedPlaylist
         if file == None:
             return -1
-        for i in xrange(0, len(pl)):
+        for i in range(0, len(pl)):
             if pl[i].file == file:
                 return i
         return -1

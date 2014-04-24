@@ -1,7 +1,10 @@
 from BallotServer import BallotServer
-import urllib
 import json
 import sys
+if sys.version_info < (3, 0, 0):
+    import urllib
+else:
+    import urllib.parse
 from bottle import Bottle, run, get, request, response, static_file, redirect, abort
 
 HTTP_OK = 200
@@ -31,7 +34,7 @@ class SimpleMPDVoteWebServer():
             if sys.version_info < (3, 0, 0):
                 path=urllib.unquote(path).decode('utf8')
             else:
-                path=urllib.parser.unquote(path, encoding='utf-8')
+                path=urllib.parse.unquote(path, encoding='utf-8')
             listing = self.bs.getLsInfo(path)
             return json.dumps(listing)
 
@@ -46,7 +49,7 @@ class SimpleMPDVoteWebServer():
             if sys.version_info < (3, 0, 0):
                 song_path=urllib.unquote(path).decode('utf8')
             else:
-                song_path=urllib.parser.unquote(path, encoding='utf-8')
+                song_path=urllib.parse.unquote(path, encoding='utf-8')
             (songQueued, playlistPosition) = self.bs.queueSong(song_path)
             if not songQueued and playlistPosition == -1:
                 abort(HTTP_NOT_FOUND, "The file you tried to queue does not exist!")
@@ -64,7 +67,7 @@ class SimpleMPDVoteWebServer():
             if sys.version_info < (3, 0, 0):
                 query=urllib.unquote(path).decode('utf8')
             else:
-                query=urllib.parser.unquote(path, encoding='utf-8')
+                query=urllib.parse.unquote(path, encoding='utf-8')
             return json.dumps(self.bs.searchFile(query))
 
         @app.get('/library.json')
@@ -86,14 +89,14 @@ class SimpleMPDVoteWebServer():
             if request.remote_addr != '127.0.0.1' and request.remote_addr != '::1':
                 abort(HTTP_FORBIDDEN, "Sorry, you're not allowed to deactivate the voting service!")
             self.voting_disabled = True
-            print "Voting disabled"
+            print ("Voting disabled".format())
 
         @app.route('/vote/activate')
         def deactivate():
             if request.remote_addr != '127.0.0.1' and request.remote_addr != '::1':
                 abort(HTTP_FORBIDDEN, "Sorry, you're not allowed to activate the voting service!")
             self.voting_disabled = False
-            print "Voting enabled"
+            print ("Voting enabled".format())
 
         @app.route('/vote/status')
         def vote_status():
